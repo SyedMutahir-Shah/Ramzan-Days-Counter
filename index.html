@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramzan Countdown</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            width: 100%;
+            background-image: url("image.png");
+            background-size: cover; /* Ensure the image covers the whole background */
+            background-position: center; /* Position the image in the center */
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9; /* Fallback color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .countdown-container {
+            text-align: center;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .time-unit {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .time-unit span {
+            font-size: 48px;
+            color: #ff6347;
+        }
+
+        .time-unit p {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        #alert-message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #28a745;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown-container">
+        <h1>Ramzan Countdown</h1>
+        <div class="countdown">
+            <div class="time-unit">
+                <span id="days">0</span>
+                <p>Days</p>
+            </div>
+            <div class="time-unit">
+                <span id="hours">0</span>
+                <p>Hours</p>
+            </div>
+            <div class="time-unit">
+                <span id="minutes">0</span>
+                <p>Minutes</p>
+            </div>
+            <div class="time-unit">
+                <span id="seconds">0</span>
+                <p>Seconds</p>
+            </div>
+        </div>
+        <p id="alert-message"></p>
+    </div>
+
+    <script>
+        var targetDate = new Date("March 1, 2025 00:00:00").getTime(); // Target date: 1st March 2025 at midnight
+        var interval;
+
+        var htmlDays = document.getElementById('days');
+        var htmlHours = document.getElementById('hours');
+        var htmlMinutes = document.getElementById('minutes');
+        var htmlSeconds = document.getElementById('seconds');
+        var alertMessage = document.getElementById('alert-message');
+
+        function startCountdown() {
+            interval = setInterval(function() {
+                var now = new Date().getTime(); // Get current date and time
+                var timeLeft = targetDate - now; // Time difference between now and target date
+
+                // Calculate days, hours, minutes, and seconds left
+                var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                // Display the countdown values
+                htmlDays.innerText = days;
+                htmlHours.innerText = hours;
+                htmlMinutes.innerText = minutes;
+                htmlSeconds.innerText = seconds;
+
+                // If the countdown reaches zero, stop the interval and show message
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    htmlDays.innerText = "0";
+                    htmlHours.innerText = "0";
+                    htmlMinutes.innerText = "0";
+                    htmlSeconds.innerText = "0";
+                    alertMessage.innerText = "Ramzan has arrived!";
+                }
+            }, 1000); // Update every second
+        }
+
+        // Start the countdown
+        startCountdown();
+    </script>
+</body>
+</html>
